@@ -139,7 +139,13 @@ vis.gam(gam.m4, view=c("F.Undergrad","P.Undergrad"), color = "topo")
 vis.gam(gam.m4, view=c("F.Undergrad","P.Undergrad"), color = "topo", plot.type = "contour")
 ```
 
-
+Description: I have fitted multiple GAM models using all the predictors. From running the ANOVA test and checking the p-values of the result output, I could see that the third GAM model(gam.m3) shows the best fit. 
+A plot of the second GAM model(gam.m2) showed the plot of the s function of the 'Terminal' predictor. The plot was neither noticeably increasing/decreasing until around a 'Terminal' value of 80, and then showed an increasing trend as 'Terminal' value increased. The credible interval spread out towards the ends of the plot.
+I have also plotted all the s functions of the third GAM model. 
+The plot of the s function of 'Accept' showed a slightly increasing trend and the credible interval spread out quite a lot as the values of the predictor increased. 
+However, the plot of the s function of 'Enroll' showed a slgitly decreasing trend and the credible interval spread out quite a lot as well as the values of the predictor increased. 
+For all the other plots of the s functions of each of their corresponding predictors, the plots did not noticeably increase or decrease. 
+I have also plotted the te function of 'F.Undergrad' and 'P.Undergrad' predictors, and the different colors indicate the magnitude of the functions. 
 
 
 
