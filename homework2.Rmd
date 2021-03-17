@@ -1,0 +1,6 @@
+---
+title: "homework2"
+author: Na Yun Cho
+output: pdf_document
+---
+
