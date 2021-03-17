@@ -4,3 +4,36 @@ author: Na Yun Cho
 output: pdf_document
 ---
 
+```{r}
+library(caret)
+library(splines)
+library(mgcv)
+library(pdp)
+library(earth)
+library(tidyverse)
+library(ggplot2)
+```
+
+
+
+## (a) Exploratory data analysis
+```{r}
+college = read.csv("./data/data.csv")
+college1 <- college[-125,]
+
+college2 = data.matrix(college1, rownames.force = NA)
+x <- college2 [ ,-c(1,9)]
+y <- college2 [ , 9]
+
+
+theme1 <- trellis.par.get()
+theme1$plot.symbol$col <- rgb(.2, .4, .2, .5)
+theme1$plot.symbol$pch <- 16
+theme1$plot.line$col <- rgb(.8, .1, .1, 1)
+theme1$plot.line$lwd <- 2
+theme1$strip.background$col <- rgb(.0, .2, .6, .2)
+trellis.par.set(theme1)
+featurePlot(x, y, plot = "scatter", labels = c("","Y"),
+            type = c("p"), layout = c(4, 2))
+```
+
