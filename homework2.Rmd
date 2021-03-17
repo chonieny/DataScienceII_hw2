@@ -114,6 +114,30 @@ p + geom_line(aes(x = Terminal, y =pred), data = pred.ss.df, color = rgb(0.8, 0.
 
 ```
 
+## (c) Fit a GAM model using all the predictors
+```{r}
+gam.m1 <- gam(Outstate~ Apps+Accept+Enroll+Top10perc+Top25perc+F.Undergrad+P.Undergrad+Room.Board+Books
+              +Personal+Terminal+PhD+S.F.Ratio+perc.alumni+Expend+Grad.Rate, data = college1)
+
+gam.m2 <- gam(Outstate~ Apps+Accept+Enroll+Top10perc+Top25perc+F.Undergrad+P.Undergrad+Room.Board+Books
+              +Personal+s(Terminal)+PhD+S.F.Ratio+perc.alumni+Expend+Grad.Rate, data = college1)
+
+gam.m3 <- gam(Outstate~ s(Apps)+s(Accept)+s(Enroll)+Top10perc+Top25perc+s(F.Undergrad)+s(P.Undergrad)
+              +Room.Board+s(Books)+Personal+s(Terminal)+PhD+S.F.Ratio+perc.alumni+Expend+Grad.Rate,
+              data = college1)
+
+gam.m4 <- gam(Outstate~ s(Apps)+s(Accept)+ s(Enroll)+Top10perc+Top25perc+te(F.Undergrad,P.Undergrad)
+              +Room.Board+s(Books)+Personal+s(Terminal)+PhD+S.F.Ratio+perc.alumni+Expend+Grad.Rate, 
+              data = college1)
+
+anova(gam.m1, gam.m2, gam.m3, gam.m4, test = "F")
+
+
+plot(gam.m2)
+plot(gam.m3)
+vis.gam(gam.m4, view=c("F.Undergrad","P.Undergrad"), color = "topo")
+vis.gam(gam.m4, view=c("F.Undergrad","P.Undergrad"), color = "topo", plot.type = "contour")
+```
 
 
 
