@@ -167,5 +167,11 @@ For the final model, the nprune value is 14 and degree is 1.
 The final model is Intercept -240.692034 * h(Grad.Rate-97) -24.5321278 * h(97- Grad.Rate) -0.3593198 * h(F.Undergrad-1355) -1.6238125 * h(1355-F.Undergrad). 
 The hinge functions are h(Grad.Rate-97), h(97- Grad.Rate), and h(F.Undergrad-1355), h(1355-F.Undergrad). 
 
+## (d)Present the partial dependence plots 
+```{r}
+p1<- pdp::partial(mars.fit, pred.var = c("Grad.Rate"), grid.resolution = 10) %>% autoplot()
+p2 <- pdp::partial(mars.fit, pred.var = c("F.Undergrad"), grid.resolution = 10) %>% autoplot()
 
+grid.arrange(p1, p2, ncol = 2)
+```
 
