@@ -148,5 +148,24 @@ For all the other plots of the s functions of each of their corresponding predic
 I have also plotted the te function of 'F.Undergrad' and 'P.Undergrad' predictors, and the different colors indicate the magnitude of the functions. 
 
 
+## (d)Train a MARS model using all the predictors 
+```{r}
+ctrl1 <- trainControl(method = "cv", number = 10)
+
+mars_grid <-expand.grid(degree = 1:3,
+                        nprune = 2:20)
+set.seed(1)
+mars.fit <- train(x, y,
+                  method = "earth",
+                  tuneGrid = mars_grid,
+                  trControl = ctrl1)
+ggplot(mars.fit)
+mars.fit$bestTune
+coef(mars.fit$finalModel) 
+```
+For the final model, the nprune value is 14 and degree is 1. 
+The final model is Intercept -240.692034 * h(Grad.Rate-97) -24.5321278 * h(97- Grad.Rate) -0.3593198 * h(F.Undergrad-1355) -1.6238125 * h(1355-F.Undergrad). 
+The hinge functions are h(Grad.Rate-97), h(97- Grad.Rate), and h(F.Undergrad-1355), h(1355-F.Undergrad). 
+
 
 
