@@ -37,3 +37,86 @@ featurePlot(x, y, plot = "scatter", labels = c("","Y"),
             type = c("p"), layout = c(4, 2))
 ```
 
+Interpretation: From this exploratory data analysis, I could see that the predictors 'F.Undergrad', 'P.Undergrad', 'Apps', 'Accept', 'Enroll', 'Terminal', and 'Books' show a relatively non-linear trend compared to other predictors. The predictors 'Top25perc', 'Room.Board', 'Top10perc', 'perc.alumni', 'Grad.Rate', 'Expend', and 'PhD' showed a generally increasing trend that looks quite linear. On the other hand, 'S.F.Ratio' and 'Personal' seemed to show a slightly decreasing trend that is quite linear. To check the associations of each predictor with the outcome 'Outstate' in more detail, further analyses would have to be done. 
+
+
+
+## (b) Fit a smoothing spline model using 'Terminal' as the only predictor
+```{r}
+# using GCV method
+fit.ss <- smooth.spline(college1$Terminal, college1$Outstate)
+fit.ss$df
+
+Terminallims <- range(college1$Terminal)
+Terminal.grid <- seq(from = Terminallims[1],to = Terminallims[2])
+
+pred.ss <- predict(fit.ss, x = Terminal.grid)
+pred.ss.df <- data.frame(pred = pred.ss$y, Terminal = Terminal.grid)
+
+p <- ggplot(data= college1, aes(x = Terminal, y = Outstate)) +geom_point(color = rgb(0.2, 0.4, 0.2, 0.5))
+p + geom_line(aes(x = Terminal, y =pred), data = pred.ss.df, color = rgb(0.8, 0.1, 0.1, 1)) +theme_bw()
+
+
+#Using LOOCV method
+fit.ss <- smooth.spline(college1$Terminal, college1$Outstate, cv = TRUE)
+fit.ss$df
+
+Terminallims <- range(college1$Terminal)
+Terminal.grid <- seq(from = Terminallims[1],to = Terminallims[2])
+
+pred.ss <- predict(fit.ss, x = Terminal.grid)
+pred.ss.df <- data.frame(pred = pred.ss$y, Terminal = Terminal.grid)
+
+p <- ggplot(data= college1, aes(x = Terminal, y = Outstate)) +geom_point(color = rgb(0.2, 0.4, 0.2, 0.5))
+p + geom_line(aes(x = Terminal, y =pred), data = pred.ss.df, color = rgb(0.8, 0.1, 0.1, 1)) +theme_bw()
+
+
+#Using arbitrary lambda values
+#Using lambda = 10
+fit.ss <- smooth.spline(college1$Terminal, college1$Outstate, lambda=10)
+fit.ss$df
+
+Terminallims <- range(college1$Terminal)
+Terminal.grid <- seq(from = Terminallims[1],to = Terminallims[2])
+
+pred.ss <- predict(fit.ss, x = Terminal.grid)
+pred.ss.df <- data.frame(pred = pred.ss$y, Terminal = Terminal.grid)
+
+p <- ggplot(data= college1, aes(x = Terminal, y = Outstate)) +geom_point(color = rgb(0.2, 0.4, 0.2, 0.5))
+p + geom_line(aes(x = Terminal, y =pred), data = pred.ss.df, color = rgb(0.8, 0.1, 0.1, 1)) +theme_bw()
+
+#Using lambda = 0.5
+fit.ss <- smooth.spline(college1$Terminal, college1$Outstate, lambda=0.5)
+fit.ss$df
+
+Terminallims <- range(college1$Terminal)
+Terminal.grid <- seq(from = Terminallims[1],to = Terminallims[2])
+
+pred.ss <- predict(fit.ss, x = Terminal.grid)
+pred.ss.df <- data.frame(pred = pred.ss$y, Terminal = Terminal.grid)
+
+p <- ggplot(data= college1, aes(x = Terminal, y = Outstate)) +geom_point(color = rgb(0.2, 0.4, 0.2, 0.5))
+p + geom_line(aes(x = Terminal, y =pred), data = pred.ss.df, color = rgb(0.8, 0.1, 0.1, 1)) +theme_bw()
+
+#Using lambda = 0.001
+fit.ss <- smooth.spline(college1$Terminal, college1$Outstate, lambda=0.001)
+fit.ss$df
+
+Terminallims <- range(college1$Terminal)
+Terminal.grid <- seq(from = Terminallims[1],to = Terminallims[2])
+
+pred.ss <- predict(fit.ss, x = Terminal.grid)
+pred.ss.df <- data.frame(pred = pred.ss$y, Terminal = Terminal.grid)
+
+p <- ggplot(data= college1, aes(x = Terminal, y = Outstate)) +geom_point(color = rgb(0.2, 0.4, 0.2, 0.5))
+p + geom_line(aes(x = Terminal, y =pred), data = pred.ss.df, color = rgb(0.8, 0.1, 0.1, 1)) +theme_bw()
+
+
+```
+
+
+
+
+
+
+
